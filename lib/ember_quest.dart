@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
 import 'actors/ember.dart';
 import 'actors/water_enemy.dart';
 import 'managers/segment_manager.dart';
@@ -12,6 +13,11 @@ import 'objects/star.dart';
 class EmberQuestGame extends FlameGame {
   late EmberPlayer _ember;
   double objectSpeed = 0.0;
+
+  @override
+  Color backgroundColor() {
+    return const Color.fromARGB(255, 173, 223, 247);
+  }
 
   @override
   FutureOr<void> onLoad() async {
