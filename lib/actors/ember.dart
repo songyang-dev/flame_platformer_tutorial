@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_platformer_tutorial/ember_quest.dart';
+import '../ember_quest.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
-    with HasGameRef<EmberQuestGame> {
+    with HasGameReference<EmberQuestGame> {
   EmberPlayer({required super.position})
       : super(size: Vector2.all(64), anchor: Anchor.center);
 

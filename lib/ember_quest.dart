@@ -11,6 +11,7 @@ import 'objects/star.dart';
 
 class EmberQuestGame extends FlameGame {
   late EmberPlayer _ember;
+  double objectSpeed = 0.0;
 
   @override
   FutureOr<void> onLoad() async {
@@ -25,7 +26,6 @@ class EmberQuestGame extends FlameGame {
     ]);
 
     camera.viewfinder.anchor = Anchor.topLeft;
-
     initializeGame();
   }
 
@@ -35,9 +35,7 @@ class EmberQuestGame extends FlameGame {
     segmentsToLoad.clamp(0, segments.length);
 
     for (var i = 0; i <= segmentsToLoad; i++) {
-      loadGameSegments(
-        i, (640 * i).toDouble(), // 640 is the size of a segment in pixels
-      );
+      loadGameSegments(i, (640 * i).toDouble());
     }
 
     _ember = EmberPlayer(position: Vector2(128, canvasSize.y - 70));
@@ -50,7 +48,9 @@ class EmberQuestGame extends FlameGame {
         case GroundBlock:
           break;
 
-        case PlatformBlock:
+        case const (PlatformBlock):
+          add(PlatformBlock(
+              gridPosition: block.gridPosition, xOffset: xPositionOffset));
           break;
 
         case Star:
