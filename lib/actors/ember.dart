@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:flame/components.dart';
+
+// Project imports:
 import '../ember_quest.dart';
 
 class EmberPlayer extends SpriteAnimationComponent

@@ -1,8 +1,12 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flutter/material.dart';
 
+// Project imports:
 import '../ember_quest.dart';
 
 class Star extends SpriteComponent with HasGameReference<EmberQuestGame> {

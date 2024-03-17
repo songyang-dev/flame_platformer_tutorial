@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 
+// Project imports:
 import '../ember_quest.dart';
 
 class WaterEnemy extends SpriteAnimationComponent
