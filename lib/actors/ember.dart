@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -60,14 +61,15 @@ class EmberPlayer extends SpriteAnimationComponent
             keysPressed.contains(LogicalKeyboardKey.arrowRight))
         ? 1
         : 0;
-    hasJumped = keysPressed.contains(LogicalKeyboardKey.space);
+    hasJumped = keysPressed.contains(LogicalKeyboardKey.space) ||
+        keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp);
     return true;
   }
 
   @override
   void update(double dt) {
     velocity.x = horizontalDirection * moveSpeed;
-    position += velocity * dt;
 
     if (horizontalDirection < 0 && scale.x > 0) {
       flipHorizontally();
@@ -92,6 +94,20 @@ class EmberPlayer extends SpriteAnimationComponent
     // crashing through the ground or a platform.
     velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
 
+    game.objectSpeed = 0;
+    // Prevent ember from going backwards at screen edge.
+    if (position.x <= 16 && horizontalDirection < 0) {
+      velocity.x = 0;
+    }
+    // Prevent ember from going beyond half screen.
+    if (position.x + 64 >= game.size.x / 2 && horizontalDirection > 0) {
+      velocity.x = 0;
+      game.objectSpeed = -moveSpeed;
+    }
+
+    position += velocity * dt;
+    debugPrint(velocity.toString());
+    debugPrint(position.toString());
     super.update(dt);
   }
 
