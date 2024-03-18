@@ -7,11 +7,14 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 
 // Project imports:
 import '../ember_quest.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
+import '../objects/star.dart';
+import 'water_enemy.dart';
 
 class EmberPlayer extends SpriteAnimationComponent
     with CollisionCallbacks, KeyboardHandler, HasGameReference<EmberQuestGame> {
@@ -30,6 +33,8 @@ class EmberPlayer extends SpriteAnimationComponent
   final double terminalVelocity = 150;
 
   bool hasJumped = false;
+
+  bool hitByEnemy = false;
 
   @override
   FutureOr<void> onLoad() {
@@ -114,6 +119,34 @@ class EmberPlayer extends SpriteAnimationComponent
         position += collisionNormal.scaled(separationDistance);
       }
     }
+
+    if (other is Star) {
+      other.removeFromParent();
+    }
+
+    if (other is WaterEnemy) {
+      hit();
+    }
+
     super.onCollision(intersectionPoints, other);
+  }
+
+  // This method runs an opacity effect on ember
+  // to make it blink.
+  void hit() {
+    if (!hitByEnemy) {
+      hitByEnemy = true;
+    }
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+        ),
+      )..onComplete = () {
+          hitByEnemy = false;
+        },
+    );
   }
 }
