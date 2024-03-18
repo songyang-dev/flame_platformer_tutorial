@@ -106,8 +106,6 @@ class EmberPlayer extends SpriteAnimationComponent
     }
 
     position += velocity * dt;
-    debugPrint(velocity.toString());
-    debugPrint(position.toString());
     super.update(dt);
   }
 
