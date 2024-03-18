@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flame/game.dart';
 
 // Project imports:
-import 'package:flame_platformer_tutorial/ember_quest.dart';
+import 'ember_quest.dart';
 
 void main() {
   runApp(
