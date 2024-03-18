@@ -16,13 +16,19 @@ import 'managers/segment_manager.dart';
 import 'objects/ground_block.dart';
 import 'objects/platform_block.dart';
 import 'objects/star.dart';
+import 'overlays/hud.dart';
 
 class EmberQuestGame extends FlameGame
-    with HasCollisionDetection, HasKeyboardHandlerComponents {
+    with
+        HasCollisionDetection,
+        HasKeyboardHandlerComponents,
+        SingleGameInstance {
   late EmberPlayer _ember;
   double objectSpeed = 0.0;
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
+  int starsCollected = 0;
+  int health = 3;
 
   @override
   Color backgroundColor() {
@@ -30,7 +36,7 @@ class EmberQuestGame extends FlameGame
   }
 
   @override
-  FutureOr<void> onLoad() async {
+  Future<void> onLoad() async {
     await images.loadAll([
       'block.png',
       'ember.png',
@@ -42,11 +48,11 @@ class EmberQuestGame extends FlameGame
     ]);
 
     camera.viewfinder.anchor = Anchor.topLeft;
-    initializeGame();
+    initializeGame(true);
   }
 
-  void initializeGame() {
-    // assume size of the viewport is < 3200
+  void initializeGame(bool loadHud) {
+    // Assume that size.x < 3200
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
 
@@ -57,7 +63,16 @@ class EmberQuestGame extends FlameGame
     _ember = EmberPlayer(
       position: Vector2(128, canvasSize.y - 128),
     );
-    world.add(_ember);
+    add(_ember);
+    if (loadHud) {
+      add(Hud());
+    }
+  }
+
+  void reset() {
+    starsCollected = 0;
+    health = 3;
+    initializeGame(false);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset) {

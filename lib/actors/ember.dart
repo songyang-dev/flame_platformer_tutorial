@@ -136,6 +136,7 @@ class EmberPlayer extends SpriteAnimationComponent
 
     if (other is Star) {
       other.removeFromParent();
+      game.starsCollected++;
     }
 
     if (other is WaterEnemy) {
@@ -150,6 +151,7 @@ class EmberPlayer extends SpriteAnimationComponent
   void hit() {
     if (!hitByEnemy) {
       hitByEnemy = true;
+      game.health--;
     }
     add(
       OpacityEffect.fadeOut(
