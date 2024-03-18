@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
@@ -103,6 +102,15 @@ class EmberPlayer extends SpriteAnimationComponent
     if (position.x + 64 >= game.size.x / 2 && horizontalDirection > 0) {
       velocity.x = 0;
       game.objectSpeed = -moveSpeed;
+    }
+
+    // If ember fell in pit, then game over.
+    if (position.y > game.size.y + size.y) {
+      game.health = 0;
+    }
+
+    if (game.health <= 0) {
+      removeFromParent();
     }
 
     position += velocity * dt;
