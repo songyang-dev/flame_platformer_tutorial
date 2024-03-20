@@ -29,7 +29,7 @@ class EmberPlayer extends SpriteAnimationComponent
   bool isOnGround = false;
 
   final double gravity = 15;
-  final double jumpSpeed = 450;
+  final double jumpSpeed = 600;
   final double terminalVelocity = 150;
 
   bool hasJumped = false;
